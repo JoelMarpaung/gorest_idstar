@@ -1,3 +1,4 @@
+import 'package:core/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/user.dart';
@@ -12,7 +13,13 @@ class UserCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            editUser,
+            arguments: user,
+          );
+        },
         child: Card(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

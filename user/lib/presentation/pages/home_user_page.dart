@@ -1,3 +1,4 @@
+import 'package:core/routes/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:user/presentation/bloc/get_user_bloc/get_user_event.dart';
@@ -26,6 +27,12 @@ class _HomeUserPageState extends State<HomeUserPage> {
       appBar: AppBar(
         title: const Text('Gorest - IDStar'),
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, addUser, arguments: (route) => false);
+          },
+          child: const Icon(Icons.add)),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -33,7 +40,12 @@ class _HomeUserPageState extends State<HomeUserPage> {
           children: [
             TextField(
               onChanged: (query) {
-                context.read<GetUserBloc>().add(OnSearchUser(query));
+                if(query != ''){
+                  context.read<GetUserBloc>().add(OnSearchUser(query));
+                }else{
+                  context.read<GetUserBloc>().add(const OnGetUser());
+                }
+
               },
               decoration: const InputDecoration(
                 hintText: 'Search user',

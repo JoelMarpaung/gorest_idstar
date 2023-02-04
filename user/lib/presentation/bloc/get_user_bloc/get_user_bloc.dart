@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../domain/usecases/Search_users.dart';
+import '../../../domain/usecases/search_users.dart';
 import '../../../domain/usecases/get_users.dart';
 import 'get_user_event.dart';
 import 'get_user_state.dart';
