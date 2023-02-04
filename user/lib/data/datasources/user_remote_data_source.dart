@@ -19,7 +19,8 @@ class UserDataSourceImpl implements UserDataSource {
   @override
   Future<List<UserModel>> searchUsers(String name) async {
     try {
-      final response = await client.get('$goRestUrl$userUrl', queryParameters: {"name": name});
+      final response = await client
+          .get('$goRestUrl$userUrl', queryParameters: {"name": name});
       if (response.statusCode == 200) {
         return parseUsers(response.data);
       } else if (response.statusCode == 429) {
@@ -65,7 +66,7 @@ class UserDataSourceImpl implements UserDataSource {
   }
 
   @override
-  Future<bool> addUser(UserModel user) async{
+  Future<bool> addUser(UserModel user) async {
     try {
       Map<String, String> headers = {
         "Accept": "application/json",
@@ -79,7 +80,8 @@ class UserDataSourceImpl implements UserDataSource {
         'gender': user.gender,
         'status': user.status
       });
-      Response response = await client.post('$goRestUrl$userUrl', data: formData);
+      Response response =
+          await client.post('$goRestUrl$userUrl', data: formData);
       if (response.statusCode == 201) {
         return true;
       } else if (response.statusCode == 429) {
@@ -101,9 +103,14 @@ class UserDataSourceImpl implements UserDataSource {
   }
 
   @override
-  Future<bool> deleteUser(int id) async{
+  Future<bool> deleteUser(int id) async {
     try {
-      client.options.headers["Authorization"] = "Bearer $accessToken";
+      Map<String, String> headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $accessToken"
+      };
+      client.options.headers.addAll(headers);
       Response response = await client.delete('$goRestUrl$userUrl/$id');
       if (response.statusCode == 201) {
         return true;
@@ -126,7 +133,7 @@ class UserDataSourceImpl implements UserDataSource {
   }
 
   @override
-  Future<bool> editUser(UserModel user) async{
+  Future<bool> editUser(UserModel user) async {
     try {
       Map<String, String> headers = {
         "Accept": "application/json",
@@ -140,8 +147,9 @@ class UserDataSourceImpl implements UserDataSource {
         'gender': user.gender,
         'status': user.status
       });
-      Response response = await client.put('$goRestUrl$userUrl/${user.id}', data: formData);
-      if (response.statusCode == 201){
+      Response response =
+          await client.put('$goRestUrl$userUrl/${user.id}', data: formData);
+      if (response.statusCode == 201) {
         return true;
       } else if (response.statusCode == 429) {
         throw RateLimitException();

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:dartz/dartz.dart';
 import 'package:core/commons/failures.dart';
 import 'package:user/data/models/user_model.dart';

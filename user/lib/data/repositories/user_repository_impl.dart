@@ -33,7 +33,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, List<User>>> getUsers() async{
+  Future<Either<Failure, List<User>>> getUsers() async {
     try {
       final result = await dataSource.getUsers();
       if (result.isEmpty) {
@@ -50,7 +50,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> addUser(UserModel user) async{
+  Future<Either<Failure, bool>> addUser(UserModel user) async {
     try {
       final result = await dataSource.addUser(user);
       if (result != true) {
@@ -67,7 +67,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> deleteUser(int id) async{
+  Future<Either<Failure, bool>> deleteUser(int id) async {
     try {
       final result = await dataSource.deleteUser(id);
       if (result != true) {
@@ -84,7 +84,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> editUser(UserModel user) async{
+  Future<Either<Failure, bool>> editUser(UserModel user) async {
     try {
       final result = await dataSource.editUser(user);
       if (result != true) {

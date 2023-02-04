@@ -40,12 +40,11 @@ class _HomeUserPageState extends State<HomeUserPage> {
           children: [
             TextField(
               onChanged: (query) {
-                if(query != ''){
+                if (query != '') {
                   context.read<GetUserBloc>().add(OnSearchUser(query));
-                }else{
+                } else {
                   context.read<GetUserBloc>().add(const OnGetUser());
                 }
-
               },
               decoration: const InputDecoration(
                 hintText: 'Search user',

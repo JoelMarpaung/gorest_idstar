@@ -10,7 +10,8 @@ class CrudUserBloc extends Bloc<CrudUserEvent, CrudUserState> {
   final EditUser _editUser;
   final DeleteUser _deleteUser;
 
-  CrudUserBloc(this._addUser, this._editUser, this._deleteUser) : super(CrudUserEmpty()) {
+  CrudUserBloc(this._addUser, this._editUser, this._deleteUser)
+      : super(CrudUserEmpty()) {
     on<OnAddUser>((event, emit) async {
       final user = event.user;
       emit(CrudUserLoading());
@@ -32,10 +33,10 @@ class CrudUserBloc extends Bloc<CrudUserEvent, CrudUserState> {
       final result = await _editUser.execute(user);
 
       result.fold(
-            (failure) {
+        (failure) {
           emit(CrudUserError(failure.message));
         },
-            (data) {
+        (data) {
           emit(CrudUserHasData(data));
         },
       );
@@ -46,10 +47,10 @@ class CrudUserBloc extends Bloc<CrudUserEvent, CrudUserState> {
       final result = await _deleteUser.execute(id);
 
       result.fold(
-            (failure) {
+        (failure) {
           emit(CrudUserError(failure.message));
         },
-            (data) {
+        (data) {
           emit(CrudUserHasData(data));
         },
       );

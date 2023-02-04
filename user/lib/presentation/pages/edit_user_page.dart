@@ -56,7 +56,7 @@ class _EditUserPageState extends State<EditUserPage> {
                     hintText: 'Enter Name',
                     labelText: 'Name',
                     errorText:
-                    _validateName ? 'Name Value Can\'t Be Empty' : null,
+                        _validateName ? 'Name Value Can\'t Be Empty' : null,
                   )),
               const SizedBox(
                 height: 20.0,
@@ -69,7 +69,7 @@ class _EditUserPageState extends State<EditUserPage> {
                     hintText: 'Enter Email',
                     labelText: 'Email',
                     errorText:
-                    _validateEmail ? 'Email Value Can\'t Be Empty' : null,
+                        _validateEmail ? 'Email Value Can\'t Be Empty' : null,
                   )),
               Text(
                 _validEmail ? 'Email is not valid' : '',
@@ -144,103 +144,104 @@ class _EditUserPageState extends State<EditUserPage> {
               ),
               BlocBuilder<CrudUserBloc, CrudUserState>(
                   builder: (context, state) {
-                    return ElevatedButton(
-                      onPressed: () async {
-                        setState(() {
-                          _validateEmail = false;
-                          _validateGender = false;
-                          _validateName = false;
-                          _validateStatus = false;
-                          _validEmail = false;
-                        });
-                        if (_nameController.text.isEmpty) {
-                          setState(() {
-                            _validateName = true;
-                          });
-                        }
-                        if (_emailController.text.isEmpty) {
-                          setState(() {
-                            _validateEmail = true;
-                          });
-                        }
-                        if (_genderController.text.isEmpty) {
-                          setState(() {
-                            _validateGender = true;
-                          });
-                        }
-                        if (_statusController.text.isEmpty) {
-                          setState(() {
-                            _validateStatus = true;
-                          });
-                        }
-                        if (!_emailController.text.isValidEmail()) {
-                          setState(() {
-                            _validEmail = true;
-                          });
-                        }
-                        if (_nameController.text.isEmpty ||
-                            _emailController.text.isEmpty ||
-                            _emailController.text.isEmpty ||
-                            _statusController.text.isEmpty ||
-                            _validEmail == true) {
-                          return;
-                        }
-                        var user = UserModel(
-                            id: 0,
-                            name: _nameController.text,
-                            email: _emailController.text,
-                            gender: _genderController.text,
-                            status: _statusController.text);
-                        context.read<CrudUserBloc>().add(OnEditUser(user));
+                return ElevatedButton(
+                  onPressed: () async {
+                    setState(() {
+                      _validateEmail = false;
+                      _validateGender = false;
+                      _validateName = false;
+                      _validateStatus = false;
+                      _validEmail = false;
+                    });
+                    if (_nameController.text.isEmpty) {
+                      setState(() {
+                        _validateName = true;
+                      });
+                    }
+                    if (_emailController.text.isEmpty) {
+                      setState(() {
+                        _validateEmail = true;
+                      });
+                    }
+                    if (_genderController.text.isEmpty) {
+                      setState(() {
+                        _validateGender = true;
+                      });
+                    }
+                    if (_statusController.text.isEmpty) {
+                      setState(() {
+                        _validateStatus = true;
+                      });
+                    }
+                    if (!_emailController.text.isValidEmail()) {
+                      setState(() {
+                        _validEmail = true;
+                      });
+                    }
+                    if (_nameController.text.isEmpty ||
+                        _emailController.text.isEmpty ||
+                        _emailController.text.isEmpty ||
+                        _statusController.text.isEmpty ||
+                        _validEmail == true) {
+                      return;
+                    }
+                    var user = UserModel(
+                        id: 0,
+                        name: _nameController.text,
+                        email: _emailController.text,
+                        gender: _genderController.text,
+                        status: _statusController.text);
+                    context.read<CrudUserBloc>().add(OnEditUser(user));
 
-                        String message = '';
-                        if (state is CrudUserLoading) {
-                          message = 'Loading...';
-                        } else if (state is CrudUserError) {
-                          message = state.message;
-                        } else if (state is CrudUserHasData) {
-                          message = 'Data Updated Success';
-                        }
-                        await Future.delayed(const Duration(seconds: 2));
-                        if (!mounted) return;
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text(message)));
-                        await Future.delayed(const Duration(seconds: 1));
-                        if (!mounted) return;
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Simpan'),
-                    );
-                  }),
+                    String message = '';
+                    if (state is CrudUserLoading) {
+                      message = 'Loading...';
+                    } else if (state is CrudUserError) {
+                      message = state.message;
+                    } else if (state is CrudUserHasData) {
+                      message = 'Data Updated Success';
+                    }
+                    await Future.delayed(const Duration(seconds: 2));
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(message)));
+                    await Future.delayed(const Duration(seconds: 1));
+                    if (!mounted) return;
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Simpan'),
+                );
+              }),
               const SizedBox(
                 height: 20.0,
               ),
               BlocBuilder<CrudUserBloc, CrudUserState>(
                   builder: (context, state) {
-                    return ElevatedButton(
-                      onPressed: () async {
+                return ElevatedButton(
+                  onPressed: () async {
+                    context
+                        .read<CrudUserBloc>()
+                        .add(OnDeleteUser(widget.user.id));
 
-                        context.read<CrudUserBloc>().add(OnDeleteUser(widget.user.id));
-
-                        String message = '';
-                        if (state is CrudUserLoading) {
-                          message = 'Loading...';
-                        } else if (state is CrudUserError) {
-                          message = state.message;
-                        } else if (state is CrudUserHasData) {
-                          message = 'Data deleted Success';
-                        }
-                        await Future.delayed(const Duration(seconds: 2));
-                        if (!mounted) return;
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text(message)));
-                        await Future.delayed(const Duration(seconds: 1));
-                        if (!mounted) return;
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Hapus Pengguna'),
-                    );
-                  }),
+                    String message = '';
+                    if (state is CrudUserLoading) {
+                      message = 'Loading...';
+                    } else if (state is CrudUserError) {
+                      message = state.message;
+                    } else if (state is CrudUserHasData) {
+                      message = 'Data deleted Success';
+                    }
+                    await Future.delayed(const Duration(seconds: 2));
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(message)));
+                    await Future.delayed(const Duration(seconds: 1));
+                    if (!mounted) return;
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Hapus Pengguna'),
+                );
+              }),
             ],
           )),
         ),
@@ -252,7 +253,7 @@ class _EditUserPageState extends State<EditUserPage> {
 extension EmailValidator on String {
   bool isValidEmail() {
     return RegExp(
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
         .hasMatch(this);
   }
 }

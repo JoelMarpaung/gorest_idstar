@@ -29,10 +29,10 @@ class GetUserBloc extends Bloc<GetUserEvent, GetUserState> {
       final result = await _searchUsers.execute(query);
 
       result.fold(
-            (failure) {
+        (failure) {
           emit(GetUserError(failure.message));
         },
-            (data) {
+        (data) {
           emit(GetUserHasData(data));
         },
       );
